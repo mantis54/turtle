@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter_web/material.dart';
+import 'package:turtle/help.dart';
 import 'package:turtle/painter.dart';
 
 void main() => runApp(MyApp());
@@ -49,65 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return ListView(
-                    children: <Widget>[
-                      ListTile(
-                        isThreeLine: true,
-                        title: Text('Commands'),
-                        subtitle: Text(
-                            'All commands follow the following format:\ncommand(alternatives) args'),
-                      ),
-                      ListTile(
-                        isThreeLine: false,
-                        title: Text('forward(fd) d'),
-                        subtitle: Text(
-                            'Moves forward and draws a line to the point at d units away'),
-                      ),
-                      ListTile(
-                        title: Text('backward(bk) d'),
-                        subtitle: Text(
-                            'Moves backward and draws a line to the point at d units away'),
-                      ),
-                      ListTile(
-                        title: Text('right(r) d'),
-                        subtitle:
-                            Text('Turns the pointer d degrees to the right'),
-                      ),
-                      ListTile(
-                        title: Text('left(l) d'),
-                        subtitle:
-                            Text('Turns the pointer d degrees to the left'),
-                      ),
-                      ListTile(
-                        title: Text('rotate(rot) d'),
-                        subtitle:
-                            Text('Sets the pointers rotation to d degrees'),
-                      ),
-                      ListTile(
-                        title: Text('circle(c) r'),
-                        subtitle: Text(
-                            'Draws a circle with radius r from the current point'),
-                      ),
-                      ListTile(
-                        title: Text('goto x y'),
-                        subtitle: Text('Moves the pointer to point (x, y)'),
-                      ),
-                      ListTile(
-                        title: Text('home(h)'),
-                        subtitle: Text(
-                            'Draws a line back to the center of the screen and resets the rotation'),
-                      ),
-                      ListTile(
-                        title: Text('for r'),
-                        subtitle: Text(
-                            'Creates a for loop that repeats the following commands r times'),
-                      ),
-                      ListTile(
-                        title: Text('end(!)'),
-                        subtitle: Text('Signifies the end of a for loop'),
-                      ),
-                    ],
-                  );
+                  MyBottomBar();
                 },
               );
             },
@@ -185,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icon(Icons.send),
                       onPressed: () {
                         setState(() {
-                          commands.add(controller.text);
+                          commands.add(controller.text.toLowerCase());
                           // controller = TextEditingController();
                           command = '';
                           // controller.clear();

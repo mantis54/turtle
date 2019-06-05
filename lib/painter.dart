@@ -6,6 +6,7 @@ class TurtlePainter extends CustomPainter {
   List<String> commands;
 
   TurtlePainter({this.commands});
+
   double x;
   double y;
   double originX;
@@ -13,6 +14,7 @@ class TurtlePainter extends CustomPainter {
   double rad;
   bool inLoop = false;
   int maxReps;
+  Color color = Colors.black;
   List<List<String>> loopedCommands;
 
   @override
@@ -78,9 +80,7 @@ class TurtlePainter extends CustomPainter {
           break;
         case 'home':
         case 'h':
-          canvas.drawLine(Offset(x, y), Offset(originX, originY), Paint());
-          x = originX;
-          y = originY;
+          move(originX, originY);
           rad = 0;
           break;
         case 'c':
@@ -89,7 +89,21 @@ class TurtlePainter extends CustomPainter {
           var newX = x + r * cos(rad + 1.5708);
           var newY = y + r * sin(rad + 1.5708);
           canvas.drawCircle(
-              Offset(newX, newY), r, Paint()..style = PaintingStyle.stroke);
+              Offset(newX, newY),
+              r,
+              Paint()
+                ..color = color
+                ..style = PaintingStyle.stroke);
+          break;
+        case 'color':
+          if (command.length < 4) {
+            setColor(command[1]);
+          } else {
+            var red = int.parse(command[1]);
+            var gre = int.parse(command[2]);
+            var blu = int.parse(command[3]);
+            color = Color.fromRGBO(red, gre, blu, 1);
+          }
           break;
         default:
       }
@@ -112,17 +126,12 @@ class TurtlePainter extends CustomPainter {
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4);
     canvas.drawPath(path, Paint()..color = Colors.white);
-
-    // canvas.drawLine(Offset(x, y), p1, Paint());
-    // canvas.drawLine(Offset(x, y), p2, Paint());
-    // canvas.drawLine(p1, p3, Paint());
-    // canvas.drawLine(p2, p3, Paint());
   }
 
   void draw(double dist, Canvas canvas) {
     var newX = dist * cos(rad) + x;
     var newY = dist * sin(rad) + y;
-    canvas.drawLine(Offset(x, y), Offset(newX, newY), Paint());
+    canvas.drawLine(Offset(x, y), Offset(newX, newY), Paint()..color = color);
     x = newX;
     y = newY;
   }
@@ -131,6 +140,29 @@ class TurtlePainter extends CustomPainter {
     if (xi != null && yj != null) {
       x = xi;
       y = yj;
+    }
+  }
+
+  void setColor(String input) {
+    switch (input) {
+      case 'red':
+        color = Colors.red;
+        break;
+      case 'blue':
+        color = Colors.blue;
+        break;
+      case 'green':
+        color = Colors.green;
+        break;
+      case 'yellow':
+        color = Colors.yellow;
+        break;
+      case 'orange':
+        color = Colors.orange;
+        break;
+      case 'black':
+      default:
+        color = Colors.black;
     }
   }
 
