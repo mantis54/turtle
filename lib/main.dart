@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  MyBottomBar();
+                  return MyBottomBar();
                 },
               );
             },
